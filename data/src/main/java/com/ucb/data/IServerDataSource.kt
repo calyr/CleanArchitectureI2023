@@ -1,5 +1,7 @@
 package com.ucb.data
 
+import com.ucb.domain.Movie
+
 interface IServerDataSource {
-    fun getMovies(): ArrayList<ServerMovie>
+    suspend fun getMovies(): List<Movie>
 }

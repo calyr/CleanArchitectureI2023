@@ -7,9 +7,19 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.google.gson.Gson
+import com.ucb.data.MovieRepository
+import com.ucb.framework.local.LocalDataSource
+import com.ucb.framework.server.RetrofitBuilder
+import com.ucb.framework.server.ServerDataSource
+import com.ucb.usercases.GetPopularMovies
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.logging.Logger
+import kotlin.math.log
 import com.ucb.livedataexample.RestApiAdapter as RestApiAdapter1
 
 class LiveDataActivity : AppCompatActivity() {
@@ -28,27 +38,38 @@ class LiveDataActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             liveDataString.changeValue((counter++).toString())
+
+            GlobalScope.launch(Dispatchers.IO) {
+                val lista = GetPopularMovies(MovieRepository(LocalDataSource(), ServerDataSource(RetrofitBuilder, getString(R.string.api_key)))).invoke()
+                lista.forEach {
+                    print(it.title)
+                    Log.d("RESP POST", it.title)
+                }
+
+
+            }
+
         }
 
-        val restApiAdapter = RestApiAdapter1()
-        val endPoint = restApiAdapter.connectionApi()
-        val bookResponseCall = endPoint.getAllPost()
-        bookResponseCall.enqueue( object : Callback<List<Post>> {
-            override fun onFailure(call: Call<List<Post>>, t: Throwable) {
-                Toast.makeText(this@LiveDataActivity, "Error", Toast.LENGTH_SHORT).show()
-                t?.printStackTrace()
-            }
-
-            override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
-                val posts = response?.body()
-                Toast.makeText(this@LiveDataActivity, "Success", Toast.LENGTH_SHORT).show()
-
-                posts?.forEach {
-                    Log.d("RESP POST", it.body)
-                    Toast.makeText(this@LiveDataActivity, it.body, Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
+//        val restApiAdapter = RestApiAdapter1()
+//        val endPoint = restApiAdapter.connectionApi()
+//        val bookResponseCall = endPoint.getAllPost()
+//        bookResponseCall.enqueue( object : Callback<List<Post>> {
+//            override fun onFailure(call: Call<List<Post>>, t: Throwable) {
+//                Toast.makeText(this@LiveDataActivity, "Error", Toast.LENGTH_SHORT).show()
+//                t?.printStackTrace()
+//            }
+//
+//            override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
+//                val posts = response?.body()
+//                Toast.makeText(this@LiveDataActivity, "Success", Toast.LENGTH_SHORT).show()
+//
+//                posts?.forEach {
+//                    Log.d("RESP POST", it.body)
+//                    Toast.makeText(this@LiveDataActivity, it.body, Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        })
 
     }
 

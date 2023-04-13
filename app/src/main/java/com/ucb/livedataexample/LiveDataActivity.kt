@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.gson.Gson
+import com.squareup.picasso.Picasso
 import com.ucb.data.MovieRepository
+import com.ucb.domain.User
 import com.ucb.framework.local.LocalDataSource
 import com.ucb.framework.server.RetrofitBuilder
 import com.ucb.framework.server.ServerDataSource
@@ -35,6 +38,13 @@ class LiveDataActivity : AppCompatActivity() {
         button = findViewById(R.id.button2)
         textView = findViewById(R.id.textView2)
         liveDataString.model.observe(this, ::updateUi)
+        session.user = User("Roberto Carlos", "Callisaya")
+
+        val picasso = Picasso.get()
+        picasso.load(
+            "https://i.pinimg.com/564x/a8/6e/26/a86e26dffbcd0f8ffd0b7a6a4809ec68.jpg")
+            .into(findViewById<ImageView>(R.id.imageView))
+
 
         button.setOnClickListener {
             liveDataString.changeValue((counter++).toString())
@@ -45,8 +55,6 @@ class LiveDataActivity : AppCompatActivity() {
                     print(it.title)
                     Log.d("RESP POST", it.title)
                 }
-
-
             }
 
         }

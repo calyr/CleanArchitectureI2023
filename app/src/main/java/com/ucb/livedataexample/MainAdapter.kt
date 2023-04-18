@@ -3,8 +3,10 @@ package com.ucb.livedataexample
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import com.ucb.domain.Movie
 
 class MainAdapter(val list: List<Movie>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -21,6 +23,11 @@ class MainAdapter(val list: List<Movie>) : RecyclerView.Adapter<RecyclerView.Vie
         val movie = list.get(position)
 
         holder.itemView.findViewById<TextView>(R.id.movie_title).text = movie.title
+        Picasso.get().load("https://image.tmdb.org/t/p/w185/${movie.path}")
+            .into(holder.itemView.findViewById<ImageView>(R.id.movie_image))
     }
+
+
 }
+
 

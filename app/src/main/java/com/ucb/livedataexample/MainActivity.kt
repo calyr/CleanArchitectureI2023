@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ucb.data.MovieRepository
 import com.ucb.domain.Movie
@@ -24,11 +26,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         recyclerView = findViewById(R.id.recycler_view)
+
+        setLayoutRecyclerView()
+
         mainViewModel = MainViewModel(GetPopularMovies(MovieRepository(LocalDataSource(), ServerDataSource( RetrofitBuilder , getString(R.string.api_key)))))
 
         mainViewModel.model.observe(this, Observer(::updateUi))
 
         mainViewModel.loadMovies()
+    }
+
+    private fun setLayoutRecyclerView() {
+        val layoutManager = GridLayoutManager(this,3)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        recyclerView.layoutManager = layoutManager
     }
 
     private fun updateUi(uiModel: MainViewModel.UiModel?) {

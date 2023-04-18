@@ -7,7 +7,6 @@ import com.ucb.domain.Movie
 import com.ucb.usercases.GetPopularMovies
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val popularMovies: GetPopularMovies): ViewModel() {

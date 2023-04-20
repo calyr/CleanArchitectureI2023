@@ -1,4 +1,4 @@
-package com.ucb.framework.server
+package com.ucb.livedataexample.server
 
 import retrofit2.http.GET
 import retrofit2.http.Query

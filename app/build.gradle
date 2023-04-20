@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -24,8 +26,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -33,9 +35,10 @@ android {
 }
 
 dependencies {
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
     implementation project(":domain")
     implementation project(path: ':usercases')
-    implementation project(":framework")
 
     implementation project(":data")
     implementation 'androidx.core:core-ktx:1.9.0'
@@ -52,6 +55,13 @@ dependencies {
     runtimeOnly group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-android', version: '1.6.4'
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.1'
     implementation "com.squareup.picasso:picasso:2.8"
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation "androidx.activity:activity-ktx:1.7.1"
 
+}
 
+// Allow references to generated code
+kapt {
+    correctErrorTypes true
 }

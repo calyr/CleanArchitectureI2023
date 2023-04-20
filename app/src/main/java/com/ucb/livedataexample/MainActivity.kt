@@ -4,22 +4,19 @@ package com.ucb.livedataexample
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ucb.data.MovieRepository
 import com.ucb.domain.Movie
-import com.ucb.framework.local.LocalDataSource
-import com.ucb.framework.server.RetrofitBuilder
-import com.ucb.framework.server.ServerDataSource
-import com.ucb.usercases.GetPopularMovies
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
-    var counter: Int = 0
-    lateinit var mainViewModel: MainViewModel
 
+    private val mainViewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         setLayoutRecyclerView()
 
-        mainViewModel = MainViewModel(GetPopularMovies(MovieRepository(LocalDataSource(), ServerDataSource( RetrofitBuilder , getString(R.string.api_key)))))
+        //mainViewModel = MainViewModel(GetPopularMovies(MovieRepository(LocalDataSource(), ServerDataSource( RetrofitBuilder , getString(R.string.api_key)))))
 
         mainViewModel.model.observe(this, Observer(::updateUi))
 

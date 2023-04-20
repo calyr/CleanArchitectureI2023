@@ -1,4 +1,4 @@
-package com.ucb.framework.server
+package com.ucb.livedataexample.server
 
 import com.google.gson.annotations.SerializedName
 

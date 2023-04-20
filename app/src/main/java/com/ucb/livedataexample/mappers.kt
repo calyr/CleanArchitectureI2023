@@ -1,8 +1,8 @@
 package com.ucb.data
 
 import com.ucb.domain.Movie
-import com.ucb.framework.local.LocalMovie
-import com.ucb.framework.server.ServerMovie
+import com.ucb.livedataexample.local.LocalMovie
+import com.ucb.livedataexample.server.ServerMovie
 
 
 fun LocalMovie.toDomainMovie() : Movie = Movie(path, title)
